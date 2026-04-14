@@ -31,7 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Auth + Backend (Supabase)
+  # auth + backend (Supabase)
   supabase_flutter: ^2.12.2
 
   # networking
@@ -53,10 +53,10 @@ dependencies:
   web_socket_channel: ^3.0.3
 
   # music control
-  spotify_sdk: ^3.0.2
+  #spotify_sdk: ^3.0.2
 
   # notifications
-  flutter_local_notifications: ^21.0.0
+  #flutter_local_notifications: ^21.0.0
 
   # utils
   uuid: ^4.5.3
@@ -64,6 +64,7 @@ dependencies:
 
   # ui
   cached_network_image: ^3.4.1
+  google_fonts: ^8.0.2
 
   # background services
   workmanager: ^0.9.0+3
