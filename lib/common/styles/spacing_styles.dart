@@ -3,9 +3,7 @@ import 'package:rider_app/common/sizes.dart';
 
 class TSpacingStyles {
   static const EdgeInsets paddingWithAppBarHeight = EdgeInsets.only(
-    top: TSizes.appBarHeight,
     left: TSizes.defaultSpace,
     right: TSizes.defaultSpace,
-    bottom: TSizes.defaultSpace
   );
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rider_app/features/authentication/screens/login.dart';
-import 'package:rider_app/features/navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +14,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        brightness: Brightness.dark,
+        fontFamily: 'Poppins',
+        scaffoldBackgroundColor: Colors.black,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
+          brightness: Brightness.dark),
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: Colors.white,),
+          bodyLarge: TextStyle(color: Colors.white),
+          headlineMedium: TextStyle(color: Colors.white),
+          headlineLarge: TextStyle(color: Colors.white),
+        ),
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: Colors.white70),
+        ),
+      ),
+
+      home: LoginScreen(),
         // This is the theme of your application.
         //
         // TRY THIS: Try running your application with "flutter run". You'll see
@@ -30,10 +48,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: LoginScreen(),
-    );
+      );
   }
 }
 
