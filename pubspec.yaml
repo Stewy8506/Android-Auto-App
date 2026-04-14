@@ -65,6 +65,12 @@ dependencies:
   # ui
   cached_network_image: ^3.4.1
 
+  # background services
+  workmanager: ^0.9.0+3
+
+  # future helmet integration possibility
+  flutter_blue_plus: ^2.2.1
+
 
 
 
