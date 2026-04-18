@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -26,15 +27,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(Icons.menu, color: primaryText),
+
+                  const SizedBox(width: 12),
+                  
                   Text(
                     "Android Auto",
-                    style: TextStyle(
+                    style: GoogleFonts.bitcountPropSingle(
                       color: primaryText,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 4,
                     ),
                   ),
                   IconButton(
@@ -60,120 +62,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      // Map Card
-                      Container(
-                        height: 220,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: surfaceColor,
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned.fill(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(16),
-                                child: Image.asset(
-                                  "assets/map.png",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 20,
-                              left: 20,
-                              right: 20,
-                              child: Container(
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: surfaceColor,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Icon(Icons.turn_right, size: 28, color: Colors.black),
-                                    const SizedBox(width: 12),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("NEXT TURN",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              letterSpacing: 2,
-                                              color: Colors.grey[700],
-                                            )),
-                                        const SizedBox(height: 4),
-                                        const Text(
-                                          "800m • Route 16",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 20,
-                              left: 20,
-                              right: 20,
-                              child: Container(
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: surfaceColor,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("CURRENT SPEED",
-                                              style: TextStyle(
-                                                fontSize: 10,
-                                                letterSpacing: 2,
-                                                color: Colors.grey[700],
-                                              )),
-                                          const SizedBox(height: 6),
-                                          const Text("82 KM/H",
-                                              style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold,
-                                              )),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(width: 1, height: 40, color: Colors.grey[300]),
-                                    const SizedBox(width: 16),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("TRIP DISTANCE",
-                                              style: TextStyle(
-                                                fontSize: 10,
-                                                letterSpacing: 2,
-                                                color: Colors.grey[700],
-                                              )),
-                                          const SizedBox(height: 6),
-                                          const Text("14.2 KM",
-                                              style: TextStyle(
-                                                fontSize: 28,
-                                                fontWeight: FontWeight.bold,
-                                              )),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
 
                       const SizedBox(height: 20),
 
@@ -325,7 +213,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               width: double.infinity,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: surfaceColor,
+                                  backgroundColor: isDarkMode ? Colors.white : Colors.black,
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.circular(12),
@@ -334,7 +222,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 onPressed: () {},
                                 child: Text("MUTE COMMS",
                                     style: TextStyle(
-                                      color: primaryText,
+                                      color: isDarkMode ? Colors.black : Colors.white,
                                     )),
                               ),
                             )

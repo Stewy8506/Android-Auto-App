@@ -1349,6 +1349,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  weatherapi:
+    dependency: "direct main"
+    description:
+      name: weatherapi
+      sha256: "867b760ffdc25d59ca702b4968e726d9913010f89fc4c3764476dee4f0037312"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   web:
     dependency: transitive
     description:
