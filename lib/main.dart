@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rider_app/features/Authentication/screens/dashboard.dart';
 import 'package:rider_app/features/authentication/screens/login.dart';
 
 void main() {
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           hintStyle: TextStyle(color: Colors.white70),
         ),
       ),
-      home: LoginScreen(),
+      home: DashboardScreen(),
         // This is the theme of your application.
         //
         // TRY THIS: Try running your application with "flutter run". You'll see

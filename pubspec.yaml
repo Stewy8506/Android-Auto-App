@@ -53,7 +53,7 @@ dependencies:
   web_socket_channel: ^3.0.3
 
   # music control
-  #spotify_sdk: ^3.0.2
+  spotify: ^0.16.1
 
   # notifications
   #flutter_local_notifications: ^21.0.0

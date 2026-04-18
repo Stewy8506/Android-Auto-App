@@ -61,379 +61,358 @@ class _LoginScreenState extends State<LoginScreen>
         child: Stack(
           children: [
             Positioned.fill(
-              child: PhysicsBallBackground(isDarkMode: isDarkMode),
+              child: MediaQuery.removeViewInsets(
+                context: context,
+                removeBottom: true,
+                child: PhysicsBallBackground(isDarkMode: isDarkMode),
+              ),
             ),
             GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: SafeArea(
-                child: SingleChildScrollView(
-                  padding: TSpacingStyles.paddingWithAppBarHeight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // KEEP YOUR EXISTING UI HERE (no changes needed)
-                      const SizedBox(height: TSizes.spaceBtwSections),
+                child: CustomScrollView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  slivers: [
+                    SliverPadding(
+                      padding: TSpacingStyles.paddingWithAppBarHeight,
+                      sliver: SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: TSizes.spaceBtwSections),
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          icon: Icon(
-                            isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                            color: primaryText,
-                          ),
-                          onPressed: () {
-                            HapticFeedback.selectionClick();
-                            setState(() {
-                              isDarkMode = !isDarkMode;
-                            });
-                          },
-                        ),
-                      ),
-
-                      const SizedBox(height: 12),
-
-                      // Logo Text
-                      Text(
-                        TTexts.loginTitle,
-                        style: GoogleFonts.moiraiOne(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 72,
-                          color: primaryText,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 100,
-                              color: Colors.white.withAlpha(80),
-                              offset: Offset(0, 0),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: IconButton(
+                                icon: Icon(
+                                  isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                                  color: primaryText,
+                                ),
+                                onPressed: () {
+                                  HapticFeedback.selectionClick();
+                                  setState(() {
+                                    isDarkMode = !isDarkMode;
+                                  });
+                                },
+                              ),
                             ),
-                            Shadow(
-                              blurRadius: 20,
-                              color: Colors.white.withAlpha(60),
-                              offset: Offset(0, 0),
+
+                            const SizedBox(height: 12),
+
+                            Text(
+                              TTexts.loginTitle,
+                              style: GoogleFonts.moiraiOne(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 72,
+                                color: primaryText,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 100,
+                                    color: Colors.white.withAlpha(80),
+                                    offset: Offset(0, 0),
+                                  ),
+                                  Shadow(
+                                    blurRadius: 20,
+                                    color: Colors.white.withAlpha(60),
+                                    offset: Offset(0, 0),
+                                  ),
+                                ],
+                              ),
                             ),
+
+                            const SizedBox(height: TSizes.spaceBtwSections + 20),
+
+                            // Email Field
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.easeInOut,
+                              transformAlignment: Alignment.center,
+                              transform: emailFocus.hasFocus
+                                  ? (Matrix4.identity()..scaleByDouble(1.01, 1.01, 1.0, 1.0))
+                                  : Matrix4.identity(),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: emailFocus.hasFocus
+                                    ? [
+                                        BoxShadow(
+                                          color: glowColor.withAlpha(120),
+                                          blurRadius: 12,
+                                          spreadRadius: 1,
+                                        ),
+                                      ]
+                                    : [],
+                              ),
+                              child: TextFormField(
+                                focusNode: emailFocus,
+                                controller: emailController,
+                                style: TextStyle(color: primaryText),
+                                onTap: () {
+                                  HapticFeedback.selectionClick();
+                                },
+                                decoration: InputDecoration(
+                                  hintText: "Email",
+                                  hintStyle: TextStyle(color: secondaryText),
+                                  filled: true,
+                                  fillColor: fieldFill,
+                                  prefixIcon: Icon(Icons.email, color: secondaryText),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    borderSide: BorderSide(color: borderColor),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    borderSide: BorderSide(
+                                      color: glowColor,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(height: TSizes.spaceBtwItems),
+
+                            // Password Field
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.easeInOut,
+                              transformAlignment: Alignment.center,
+                              transform: passwordFocus.hasFocus
+                                  ? (Matrix4.identity()..scaleByDouble(1.01, 1.01, 1.0, 1.0))
+                                  : Matrix4.identity(),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: passwordFocus.hasFocus
+                                    ? [
+                                        BoxShadow(
+                                          color: glowColor.withAlpha(120),
+                                          blurRadius: 12,
+                                          spreadRadius: 1,
+                                        ),
+                                      ]
+                                    : [],
+                              ),
+                              child: TextFormField(
+                                focusNode: passwordFocus,
+                                controller: passwordController,
+                                obscureText: _obscurePassword,
+                                style: TextStyle(color: primaryText),
+                                onTap: () {
+                                  HapticFeedback.selectionClick();
+                                },
+                                onChanged: (_) => setState(() {}),
+                                decoration: InputDecoration(
+                                  hintText: "Password",
+                                  hintStyle: TextStyle(color: secondaryText),
+                                  filled: true,
+                                  fillColor: fieldFill,
+                                  prefixIcon: Icon(Icons.lock, color: secondaryText),
+                                  suffixIcon: passwordController.text.isNotEmpty
+                                      ? IconButton(
+                                          icon: Icon(
+                                            _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                                            color: secondaryText,
+                                          ),
+                                          onPressed: () {
+                                            HapticFeedback.selectionClick();
+                                            setState(() {
+                                              _obscurePassword = !_obscurePassword;
+                                            });
+                                          },
+                                        )
+                                      : null,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    borderSide: BorderSide(color: borderColor),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    borderSide: BorderSide(
+                                      color: glowColor,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(height: TSizes.spaceBtwSections),
+
+                            // Button (keep existing builder)
+                            Builder(builder: (context) {
+                              final isPressed = ValueNotifier<bool>(false);
+                              return ValueListenableBuilder<bool>(
+                                valueListenable: isPressed,
+                                builder: (context, value, child) {
+                                  return GestureDetector(
+                                    onTapDown: (_) => isPressed.value = true,
+                                    onTapUp: (_) => isPressed.value = false,
+                                    onTapCancel: () => isPressed.value = false,
+                                    onTap: () async {
+                                      HapticFeedback.lightImpact();
+                                      isPressed.value = true;
+                                      await Future.delayed(const Duration(milliseconds: 80));
+                                      isPressed.value = false;
+                                    },
+                                    child: AnimatedScale(
+                                      scale: value ? 0.97 : 1.0,
+                                      duration: const Duration(milliseconds: 100),
+                                      curve: Curves.easeInOut,
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: value
+                                                ? (isDarkMode ? Colors.grey[200] : Colors.grey[700])
+                                                : (isDarkMode ? Colors.white : Colors.black),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(14),
+                                            ),
+                                          ),
+                                          onPressed: isLoading
+                                              ? null
+                                              : () async {
+                                                  if (emailController.text.isEmpty ||
+                                                      passwordController.text.isEmpty) {
+                                                    HapticFeedback.heavyImpact();
+                                                    Overlay.of(context).insert(
+                                                      OverlayEntry(
+                                                        builder: (context) => _AnimatedAlert(
+                                                          message: "Enter email and password",
+                                                        ),
+                                                      ),
+                                                    );
+                                                    return;
+                                                  }
+
+                                                  setState(() => isLoading = true);
+                                                  await Future.delayed(const Duration(seconds: 1));
+                                                  if (!mounted) return;
+                                                  setState(() => isLoading = false);
+                                                },
+                                          child: isLoading
+                                              ? SizedBox(
+                                                  height: 20,
+                                                  width: 20,
+                                                  child: CircularProgressIndicator(
+                                                    strokeWidth: 2,
+                                                    color: isDarkMode ? Colors.black : Colors.white,
+                                                  ),
+                                                )
+                                              : Text(
+                                                  "Sign in",
+                                                  style: TextStyle(
+                                                    color: isDarkMode ? Colors.black : Colors.white,
+                                                  ),
+                                                ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }),
+
+                            const SizedBox(height: TSizes.spaceBtwItems),
+
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Forgot Password?",
+                                style: TextStyle(color: secondaryText),
+                              ),
+                            ),
+
+                            const SizedBox(height: TSizes.spaceBtwSections),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Don't have an account? ",
+                                  style: TextStyle(color: secondaryText),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const SignupScreen(),
+                                      ),
+                                    );
+                                  },
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    minimumSize: const Size(0, 0),
+                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                  ),
+                                  child: Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                      color: primaryText,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: TSizes.spaceBtwSections),
+
+                            Center(
+                              child: Text(
+                                "or",
+                                style: TextStyle(color: secondaryText),
+                              ),
+                            ),
+
+                            const SizedBox(height: TSizes.spaceBtwSections),
+
+                            const Spacer(),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                _socialIcon(Icons.g_mobiledata),
+                                _socialIcon(Icons.facebook),
+                                _socialIcon(Icons.apple),
+                                _socialIconAsset(
+                                  isDarkMode
+                                      ? 'assets/icons/github_dark.png'
+                                      : 'assets/icons/github_light.png',
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: TSizes.spaceBtwItems + 24),
+
+                            Center(
+                              child: Text(
+                                TTexts.signatureTitle,
+                                style: GoogleFonts.bitcountPropSingle(
+                                  fontSize: 12,
+                                  color: secondaryText.withAlpha(80),
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(height: 6),
                           ],
                         ),
                       ),
-
-                      const SizedBox(height: TSizes.spaceBtwSections + 20),
-
-                      // Email Field
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeInOut,
-                        transformAlignment: Alignment.center,
-                        transform: emailFocus.hasFocus
-                            ? (Matrix4.identity()
-                                ..scaleByDouble(1.01, 1.01, 1.0, 1.0))
-                            : Matrix4.identity(),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: emailFocus.hasFocus
-                              ? [
-                                  BoxShadow(
-                                    color: glowColor.withAlpha(120),
-                                    blurRadius: 12,
-                                    spreadRadius: 1,
-                                  ),
-                                ]
-                              : [],
-                        ),
-                        child: TextFormField(
-                          focusNode: emailFocus,
-                          controller: emailController,
-                          style: TextStyle(color: primaryText),
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                          },
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            hintStyle: TextStyle(color: secondaryText),
-                            filled: true,
-                            fillColor: fieldFill,
-                            prefixIcon: Icon(Icons.email, color: secondaryText),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(color: borderColor),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
-                                color: glowColor,
-                                width: 1.5,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: TSizes.spaceBtwItems),
-
-                      // Password Field
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        curve: Curves.easeInOut,
-                        transformAlignment: Alignment.center,
-                        transform: passwordFocus.hasFocus
-                            ? (Matrix4.identity()
-                                ..scaleByDouble(1.01, 1.01, 1.0, 1.0))
-                            : Matrix4.identity(),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: passwordFocus.hasFocus
-                              ? [
-                                  BoxShadow(
-                                    color: glowColor.withAlpha(120),
-                                    blurRadius: 12,
-                                    spreadRadius: 1,
-                                  ),
-                                ]
-                              : [],
-                        ),
-                        child: TextFormField(
-                          focusNode: passwordFocus,
-                          controller: passwordController,
-                          obscureText: _obscurePassword,
-                          style: TextStyle(color: primaryText),
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                          },
-                          onChanged: (_) => setState(() {}),
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            hintStyle: TextStyle(color: secondaryText),
-                            filled: true,
-                            fillColor: fieldFill,
-                            prefixIcon: Icon(Icons.lock, color: secondaryText),
-                            suffixIcon: passwordController.text.isNotEmpty
-                                ? IconButton(
-                                    icon: Icon(
-                                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                                      color: secondaryText,
-                                    ),
-                                    onPressed: () {
-                                      HapticFeedback.selectionClick();
-                                      setState(() {
-                                        _obscurePassword = !_obscurePassword;
-                                      });
-                                    },
-                                  )
-                                : null,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(color: borderColor),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(
-                                color: glowColor,
-                                width: 1.5,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: TSizes.spaceBtwSections),
-
-                      Builder(
-                        builder: (context) {
-                          final isPressed = ValueNotifier<bool>(false);
-
-                          return ValueListenableBuilder<bool>(
-                            valueListenable: isPressed,
-                            builder: (context, value, child) {
-                              return GestureDetector(
-                                onTapDown: (_) => isPressed.value = true,
-                                onTapUp: (_) => isPressed.value = false,
-                                onTapCancel: () => isPressed.value = false,
-                                onTap: () async {
-                                  HapticFeedback.lightImpact();
-                                  isPressed.value = true;
-                                  await Future.delayed(
-                                    const Duration(milliseconds: 80),
-                                  );
-                                  isPressed.value = false;
-                                },
-                                child: AnimatedScale(
-                                  scale: value ? 0.97 : 1.0,
-                                  duration: const Duration(milliseconds: 100),
-                                  curve: Curves.easeInOut,
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    height: 50,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: value
-                                            ? (isDarkMode
-                                                  ? Colors.grey[200]
-                                                  : Colors.grey[700])
-                                            : (isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            14,
-                                          ),
-                                        ),
-                                      ),
-                                      onPressed: isLoading
-                                          ? null
-                                          : () async {
-                                              if (emailController
-                                                      .text
-                                                      .isEmpty ||
-                                                  passwordController
-                                                      .text
-                                                      .isEmpty) {
-                                                HapticFeedback.heavyImpact();
-                                                Overlay.of(context).insert(
-                                                  OverlayEntry(
-                                                    builder: (context) =>
-                                                        _AnimatedAlert(
-                                                          message:
-                                                              "Enter email and password",
-                                                        ),
-                                                  ),
-                                                );
-                                                return;
-                                              }
-
-                                              setState(() => isLoading = true);
-
-                                              await Future.delayed(
-                                                const Duration(seconds: 1),
-                                              ); // placeholder for Firebase auth
-
-                                              if (!mounted) return;
-
-                                              setState(() => isLoading = false);
-
-                                              //Navigator.pushReplacement(
-                                              //context,
-                                              //MaterialPageRoute(
-                                              //builder: (context) => const GridScreen(),
-                                              //),
-                                              //);
-                                            },
-                                      child: isLoading
-                                          ? SizedBox(
-                                              height: 20,
-                                              width: 20,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                color: isDarkMode
-                                                    ? Colors.black
-                                                    : Colors.white,
-                                              ),
-                                            )
-                                          : Text(
-                                              "Sign in",
-                                              style: TextStyle(
-                                                color: isDarkMode
-                                                    ? Colors.black
-                                                    : Colors.white,
-                                              ),
-                                            ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      ),
-
-                      const SizedBox(height: TSizes.spaceBtwItems),
-
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Forgot Password?",
-                          style: TextStyle(color: secondaryText),
-                        ),
-                      ),
-
-                      const SizedBox(height: TSizes.spaceBtwSections),
-
-                      // Sign Up
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't have an account? ",
-                            style: TextStyle(color: secondaryText),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SignupScreen(),
-                                ),
-                              );
-                            },
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              minimumSize: const Size(0, 0),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            child: Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                color: primaryText,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: TSizes.spaceBtwSections),
-
-                      Center(
-                        child: Text(
-                          "or",
-                          style: TextStyle(color: secondaryText),
-                        ),
-                      ),
-
-                      const SizedBox(height: TSizes.spaceBtwSections),
-
-                      // Social Icons Row
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _socialIcon(Icons.g_mobiledata),
-                          _socialIcon(Icons.facebook),
-                          _socialIcon(Icons.apple),
-                          _socialIconAsset(isDarkMode ? 'assets/icons/github_dark.png' : 'assets/icons/github_light.png'),
-                        ],
-                      ),
-
-                      const SizedBox(height: TSizes.spaceBtwItems + 54),
-
-                      // Signature
-                      Center(
-                        child: Text(
-                          TTexts.signatureTitle,
-                          style: GoogleFonts.bitcountPropSingle(
-                            fontSize: 12,
-                            color: secondaryText.withAlpha(80),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 6),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

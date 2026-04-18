@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rider_app/common/sizes.dart';
 import 'package:rider_app/common/styles/spacing_styles.dart';
-import 'package:rider_app/common/text.dart';
 import 'package:rider_app/ui/film_grain_overlay.dart';
 import 'package:rider_app/ui/physics_ball_background.dart';
 
@@ -70,7 +69,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       transform: focus.hasFocus
-          ? (Matrix4.identity()..scale(1.01))
+          ? Matrix4.diagonal3Values(1.01, 1.01, 1.01)
           : Matrix4.identity(),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
@@ -80,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   color: glowColor.withAlpha(120),
                   blurRadius: 12,
                   spreadRadius: 1,
-                )
+                ),
               ]
             : [],
       ),
@@ -129,9 +128,7 @@ class _SignupScreenState extends State<SignupScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          Positioned.fill(
-            child: PhysicsBallBackground(isDarkMode: isDarkMode),
-          ),
+          Positioned.fill(child: PhysicsBallBackground(isDarkMode: isDarkMode)),
           FilmGrainOverlay(
             child: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
@@ -147,9 +144,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         alignment: Alignment.centerRight,
                         child: IconButton(
                           icon: Icon(
-                            isDarkMode
-                                ? Icons.light_mode
-                                : Icons.dark_mode,
+                            isDarkMode ? Icons.light_mode : Icons.dark_mode,
                             color: primaryText,
                           ),
                           onPressed: () {
@@ -197,8 +192,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         focus: passwordFocus,
                         obscure: _obscurePassword,
                         toggle: () {
-                          setState(() =>
-                              _obscurePassword = !_obscurePassword);
+                          setState(() => _obscurePassword = !_obscurePassword);
                         },
                       ),
 
@@ -211,8 +205,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         focus: confirmPasswordFocus,
                         obscure: _obscureConfirm,
                         toggle: () {
-                          setState(() =>
-                              _obscureConfirm = !_obscureConfirm);
+                          setState(() => _obscureConfirm = !_obscureConfirm);
                         },
                       ),
 
@@ -241,7 +234,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
                                   setState(() => isLoading = true);
                                   await Future.delayed(
-                                      const Duration(seconds: 1));
+                                    const Duration(seconds: 1),
+                                  );
                                   setState(() => isLoading = false);
                                 },
                           child: isLoading
