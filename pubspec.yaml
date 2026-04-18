@@ -55,6 +55,14 @@ dependencies:
   # music control
   spotify: ^0.16.1
 
+  # voice channel
+  agora_rtc_engine: ^6.5.3
+
+  # file storage
+  #file_picker: ^5.2.3
+  #path_provider: ^2.0.15
+
+
   # notifications
   #flutter_local_notifications: ^21.0.0
 
