@@ -51,6 +51,7 @@ dependencies:
 
   # weather
   weatherapi: ^1.1.1
+  weather_icons: ^3.0.0
 
   # realtime chat
   web_socket_channel: ^3.0.3
