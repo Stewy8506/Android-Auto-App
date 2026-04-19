@@ -37,7 +37,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             // Top Bar
             Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 8),
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: 12,
+                bottom: 8,
+              ),
               child: Row(
                 children: [
                   IconButton(
@@ -195,10 +200,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         fontSize: 16,
                                       ),
                                     ),
-                                    const SizedBox(height: 2),
+                                    
                                     Text(
-                                      "Ride Score",
-                                      style: TextStyle(
+                                      "Confidence",
+                                      style: GoogleFonts.poppins(
                                         color: secondaryText,
                                         fontSize: TSizes.fontXs,
                                       ),
@@ -211,66 +216,122 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       ),
 
+                      //TODO: Map Card
+
                       // Music Card
                       Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: cardColor,
-                          borderRadius: BorderRadius.circular(16),
+                        margin: const EdgeInsets.only(top: 12),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
                         ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 90,
-                              height: 90,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: surfaceColor,
-                              ),
-                              child: const Icon(Icons.play_arrow),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Get Lucky",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                          color: primaryText,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                        decoration: BoxDecoration(
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: (isDarkMode ? Colors.white : Colors.black)
+                                  .withAlpha(30),
 
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    "Daft Punk",
-                                    style: TextStyle(color: secondaryText),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  LinearProgressIndicator(
-                                    value: 0.7,
-                                    color: primaryText,
-                                    backgroundColor: secondaryText.withAlpha(
-                                      60,
+                              blurRadius: 20,
+
+                              spreadRadius: 1,
+
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: TSizes.xs),
+
+                            Text(
+                              "NOW PLAYING",
+                              style: GoogleFonts.bitcountPropSingle(
+                                color: isDarkMode
+                                    ? Colors.black87
+                                    : Colors.white70,
+                                fontSize: TSizes.fontXs,
+                                letterSpacing: 2,
+                              ),
+                            ),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // Track name
+                                Expanded(
+                                  child: Text(
+                                    "Get Lucky - Daft Punk",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: isDarkMode
+                                          ? Colors.black
+                                          : Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: const [
-                                      Icon(Icons.skip_previous),
-                                      Icon(Icons.pause_circle_outline),
-                                      Icon(Icons.skip_next),
-                                    ],
-                                  ),
-                                ],
+                                ),
+
+                                // Controls
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.skip_previous,
+                                      color: isDarkMode
+                                          ? Colors.black
+                                          : Colors.white,
+                                      size: 22,
+                                    ),
+
+                                    const SizedBox(width: 10),
+
+                                    Container(
+                                      width: 48,
+                                      height: 48,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: isDarkMode
+                                            ? Colors.black
+                                            : Colors.white,
+                                      ),
+                                      child: Icon(
+                                        Icons.pause,
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
+                                        size: 22,
+                                      ),
+                                    ),
+
+                                    const SizedBox(width: 10),
+
+                                    Icon(
+                                      Icons.skip_next,
+                                      color: isDarkMode
+                                          ? Colors.black
+                                          : Colors.white,
+                                      size: 22,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 10),
+
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(3),
+                              child: LinearProgressIndicator(
+                                value: 0.2,
+                                minHeight: 4,
+                                color: Colors.blueAccent,
+                                backgroundColor: isDarkMode
+                                    ? Colors.black54
+                                    : Colors.grey[300],
                               ),
                             ),
                           ],
@@ -334,38 +395,71 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ),
                                       ),
                                       const SizedBox(width: 6),
-                                      const Text("ACTIVE COMM"),
+                                      Text(
+                                        "Connected",
+                                        style: GoogleFonts.bitcountPropSingle(
+                                          color: isDarkMode
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontSize: TSizes.fontSm,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
-                
-                            _userTile("Kenji_88", "0.4 KM ahead"),
-                    
-                            _userTile("Sarah_Moto", "Trailing 1.2 KM"),                           
 
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: isDarkMode
-                                      ? Colors.white
-                                      : Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
+                            _userTile("Kenji_88", "0.4 KM ahead"),
+
+                            _userTile("Sarah_Moto", "Trailing 1.2 KM"),
+
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.volume_off,
+                                        color: isDarkMode
+                                            ? Colors.black
+                                            : Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                onPressed: () {},
-                                child: Text(
-                                  "MUTE COMMS",
-                                  style: TextStyle(
-                                    color: isDarkMode
-                                        ? Colors.black
-                                        : Colors.white,
+
+                                const SizedBox(width: TSizes.defaultSpace),
+
+                                Expanded(
+                                  child: Container(
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.mic_off,
+                                        color: isDarkMode
+                                            ? Colors.black
+                                            : Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ],
                         ),
