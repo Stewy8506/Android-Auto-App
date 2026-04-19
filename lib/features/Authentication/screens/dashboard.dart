@@ -70,18 +70,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ),
                   ),
-
-                  IconButton(
-                    icon: Icon(
-                      isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                      color: primaryText,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isDarkMode = !isDarkMode;
-                      });
-                    },
-                  ),
                 ],
               ),
             ),
@@ -120,10 +108,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Howrah, WB",
-                                    style: GoogleFonts.montserrat(
+                                    "36°C",
+                                    style: GoogleFonts.figtree(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: TSizes.fontSm,
+                                      fontSize: TSizes.fontXl,
                                       color: primaryText,
                                     ),
                                   ),
@@ -189,14 +177,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   height: 64,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: isDarkMode ? const Color(0xFF0E0E10) : Colors.white,
+                                    color: isDarkMode
+                                        ? const Color(0xFF0E0E10)
+                                        : Colors.white,
                                     border: Border.all(
                                       color: getRideColor(rideScore),
                                       width: 2,
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: getRideColor(rideScore).withAlpha(60),
+                                        color: getRideColor(
+                                          rideScore,
+                                        ).withAlpha(60),
                                         blurRadius: 16,
                                         spreadRadius: 1,
                                       ),
@@ -249,21 +241,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           boxShadow: [
                             BoxShadow(
                               color: (isDarkMode ? Colors.white : Colors.black)
-                                  .withAlpha(30),
-
+                                  .withAlpha(50),
                               blurRadius: 20,
-
                               spreadRadius: 1,
-
-                              offset: const Offset(0, 8),
                             ),
                           ],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: TSizes.xs),
-
                             Text(
                               "NOW PLAYING",
                               style: GoogleFonts.bitcountPropSingle(
@@ -275,22 +261,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
                             ),
 
+                            const SizedBox(height: TSizes.sm),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                // Track name
+                                // Track + Artist
                                 Expanded(
-                                  child: Text(
-                                    "Get Lucky - Daft Punk",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: isDarkMode
-                                          ? Colors.black
-                                          : Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Get Lucky",
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.montserrat(
+                                          color: isDarkMode
+                                              ? Colors.black
+                                              : Colors.white,
+                                          fontSize: TSizes.fontXl,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Daft Punk",
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: TSizes.fontSm,
+                                          color: isDarkMode
+                                              ? Colors.black54
+                                              : Colors.white70,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
 
@@ -304,9 +307,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           : Colors.white,
                                       size: 22,
                                     ),
-
                                     const SizedBox(width: 10),
-
                                     Container(
                                       width: 48,
                                       height: 48,
@@ -324,9 +325,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         size: 22,
                                       ),
                                     ),
-
                                     const SizedBox(width: 10),
-
                                     Icon(
                                       Icons.skip_next,
                                       color: isDarkMode
@@ -428,9 +427,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ],
                             ),
 
-                            _userTile("Kenji_88", "0.4 KM ahead"),
+                            _userTile("Kenji_88", "0.4 km ahead"),
 
-                            _userTile("Sarah_Moto", "Trailing 1.2 KM"),
+                            _userTile("Sarah_Moto", "1.2 km behind"),
+
+                            _userTile("anv.dev", "1.5 km behind"),
 
                             Row(
                               children: [
@@ -481,6 +482,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                           ],
                         ),
+                      ),
+
+                      IconButton(
+                        icon: Icon(
+                          isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                          color: primaryText,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isDarkMode = !isDarkMode;
+                          });
+                        },
                       ),
                     ],
                   ),
