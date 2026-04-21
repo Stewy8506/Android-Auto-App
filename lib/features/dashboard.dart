@@ -85,6 +85,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   child: Column(
                     children: [
+
+                      
                       //Weather Card
                       Container(
                         padding: const EdgeInsets.only(bottom: 16),
@@ -109,7 +111,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 children: [
                                   Text(
                                     "36°C",
-                                    style: GoogleFonts.figtree(
+                                    style: GoogleFonts.lora(
                                       fontWeight: FontWeight.w500,
                                       fontSize: TSizes.fontXl,
                                       color: primaryText,
@@ -416,11 +418,64 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ],
                             ),
 
-                            _userTile("Kenji_88", "0.4 km ahead"),
-
-                            _userTile("Sarah_Moto", "1.2 km behind"),
-
-                            _userTile("anv.dev", "1.5 km behind"),
+                            SizedBox(
+                              height: 140, // fixed height → consistent size always
+                              child: Stack(
+                                children: [
+                                  Scrollbar(
+                                    thumbVisibility: false,
+                                    thickness: 2.5,
+                                    radius: const Radius.circular(10),
+                                    interactive: true,
+                                    child: ListView(
+                                      physics: const BouncingScrollPhysics(),
+                                      padding: const EdgeInsets.only(right: 4),
+                                      children: [
+                                        _userTile("Kenji_88", "0.4 km ahead"),
+                                        _userTile("You", "-"),
+                                        _userTile("Sarah_Moto", "1.2 km behind"),
+                                        _userTile("anv.dev", "1.5 km behind"),
+                                      ],
+                                    ),
+                                  ),
+                                  // 🔥 Subtle fade overlay (top + bottom)
+                                  IgnorePointer(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 8,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                cardColor,
+                                                cardColor.withAlpha(0),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        // Bottom fade
+                                        Container(
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.bottomCenter,
+                                              end: Alignment.topCenter,
+                                              colors: [
+                                                cardColor,
+                                                cardColor.withAlpha(0),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
 
                             Row(
                               children: [
@@ -518,24 +573,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _userTile(String name, String status) {
-    return Container(
-      padding: const EdgeInsets.only(left: 12, right: 12, top: 6, bottom: 6),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          const CircleAvatar(radius: 18),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              name,
-              style: TextStyle(color: primaryText, fontWeight: FontWeight.w500),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: name == "You"
+              ? cardColor.withAlpha(180)
+              : cardColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            const CircleAvatar(radius: 18),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                name,
+                style: TextStyle(color: primaryText, fontWeight: FontWeight.w500),
+              ),
             ),
-          ),
-          Text(status, style: TextStyle(color: secondaryText)),
-        ],
+            Text(status, style: TextStyle(color: secondaryText)),
+          ],
+        ),
       ),
     );
   }

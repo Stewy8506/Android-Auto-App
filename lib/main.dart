@@ -1,9 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rider_app/features/dashboard.dart';
+import 'package:rider_app/features/Map/map_page.dart';
+
+import 'package:provider/provider.dart';
+import 'package:rider_app/features/Map/map_view_model.dart';
+import 'package:rider_app/features/Navigation/navigation_controller.dart';
+import 'package:rider_app/features/Navigation/navigation_repository.dart';
+import 'package:rider_app/services/location_service.dart';
+import 'package:rider_app/services/navigation_service.dart';
+import 'package:rider_app/services/route_service.dart';
 
 void main() {
-  runApp(const MyApp());
+  final locationService = LocationService();
+  final routeService = RouteService();
+  final navigationService = NavigationService(locationService);
+
+  final repository = NavigationRepository(
+    routeService: routeService,
+    locationService: locationService,
+    navigationService: navigationService,
+  );
+
+  final navigationController = NavigationController(repository);
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: navigationController),
+        ChangeNotifierProvider(
+          create: (_) => MapViewModel(navigationController),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +60,7 @@ class MyApp extends StatelessWidget {
           hintStyle: TextStyle(color: Colors.white70),
         ),
       ),
-      home: DashboardScreen(),
+      home: MapPage(),
         // This is the theme of your application.
         //
         // TRY THIS: Try running your application with "flutter run". You'll see
