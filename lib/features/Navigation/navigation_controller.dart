@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 
-import '../../models/navigation_state.dart';
-import '../../models/route_model.dart';
-import '../../services/navigation_service.dart';
+import '../../core/models/navigation_state.dart';
+import '../../core/models/route_model.dart';
+import '../../core/services/navigation_service.dart';
 import 'navigation_repository.dart';
 
 class NavigationController extends ChangeNotifier {

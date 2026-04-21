@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'map_view_model.dart';
 import '../Navigation/navigation_controller.dart';
-import '../../models/navigation_state.dart';
+import '../../core/models/navigation_state.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});

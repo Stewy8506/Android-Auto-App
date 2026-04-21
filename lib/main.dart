@@ -6,9 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:rider_app/features/Map/map_view_model.dart';
 import 'package:rider_app/features/Navigation/navigation_controller.dart';
 import 'package:rider_app/features/Navigation/navigation_repository.dart';
-import 'package:rider_app/services/location_service.dart';
-import 'package:rider_app/services/navigation_service.dart';
-import 'package:rider_app/services/route_service.dart';
+import 'package:rider_app/core/services/location_service.dart';
+import 'package:rider_app/core/services/navigation_service.dart';
+import 'package:rider_app/core/services/route_service.dart';
 
 void main() {
   final locationService = LocationService();

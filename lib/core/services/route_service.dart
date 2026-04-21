@@ -1,10 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/route_model.dart';
 
 class RouteService {
-  static const String _apiKey = "AIzaSyBQzUJMcehvlc14DeEkAaW6MQd7HxG7fa0";
+  late final String _apiKey;
+
+  RouteService() {
+    _apiKey = dotenv.env['GOOGLE_MAPS_API_KEY'] ?? '';
+  }
 
   Future<RouteModel> fetchRoute({
     required double startLat,

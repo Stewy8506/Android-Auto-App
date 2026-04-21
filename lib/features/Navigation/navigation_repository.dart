@@ -1,7 +1,7 @@
-import 'package:rider_app/models/route_model.dart';
-import 'package:rider_app/services/route_service.dart';
-import 'package:rider_app/services/location_service.dart';
-import 'package:rider_app/services/navigation_service.dart';
+import 'package:rider_app/core/models/route_model.dart';
+import 'package:rider_app/core/services/route_service.dart';
+import 'package:rider_app/core/services/location_service.dart';
+import 'package:rider_app/core/services/navigation_service.dart';
 
 class NavigationRepository {
   final RouteService routeService;
