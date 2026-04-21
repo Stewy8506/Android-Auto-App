@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -14,7 +15,9 @@ class MapViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  /// Get current location
+  StreamSubscription<Position>? _positionStream;
+
+  /// Start streaming current location
   Future<void> fetchCurrentLocation() async {
     _isLoading = true;
     notifyListeners();
@@ -27,7 +30,24 @@ class MapViewModel extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+    
+    _positionStream = Geolocator.getPositionStream(
+       locationSettings: const LocationSettings(
+         accuracy: LocationAccuracy.bestForNavigation,
+         distanceFilter: 0,
+       ),
+    ).listen((position) {
+       _currentPosition = position;
+       notifyListeners();
+    });
   }
+  
+  @override
+  void dispose() {
+    _positionStream?.cancel();
+    super.dispose();
+  }
+
 
   /// Preview route (before navigation starts)
   Future<void> previewRoute({

@@ -28,7 +28,7 @@ class LocationService {
     _sub = Geolocator.getPositionStream(
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.bestForNavigation,
-        distanceFilter: 3,
+        distanceFilter: 0,
       ),
     ).listen(_controller.add);
   }

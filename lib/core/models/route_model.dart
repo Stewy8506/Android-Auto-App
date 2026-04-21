@@ -33,12 +33,12 @@ class RouteStep {
   final String instruction;
   final double distance;
   final double duration;
-  final List<double> location; // [lat, lng]
+  final List<List<double>> polyline; // Points forming this step
 
   RouteStep({
     required this.instruction,
     required this.distance,
     required this.duration,
-    required this.location,
+    required this.polyline,
   });
 }

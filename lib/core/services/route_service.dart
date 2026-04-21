@@ -23,6 +23,7 @@ class RouteService {
       "&destination=$endLat,$endLng"
       "&key=$_apiKey"
       "&mode=driving"
+      "&alternatives=true",
     );
 
     final response = await http.get(url);
@@ -37,13 +38,45 @@ class RouteService {
       throw Exception("No routes found");
     }
 
-    final route = data["routes"][0];
+    final routes = data["routes"] as List;
+    final route = routes[0]; // primary route (best)
     final leg = route["legs"][0];
 
+    // Parse steps and stitch high-precision geometry
+    List<RouteStep> parsedSteps = [];
+    List<List<double>> highResPoints = [];
+    if (leg["steps"] != null) {
+      for (var step in leg["steps"]) {
+        final htmlInstruction = step["html_instructions"] ?? "";
+        // Clean HTML tags from instruction
+        final cleanInstruction = htmlInstruction.replaceAll(
+          RegExp(r'<[^>]*>'),
+          '',
+        );
+
+        final stepDistance = step["distance"]["value"].toDouble();
+        final stepDuration = step["duration"]["value"].toDouble();
+        final stepPolyline = _decodePolyline(step["polyline"]["points"]);
+
+        // Accumulate high-res geometry to perfectly fit road curves
+        highResPoints.addAll(stepPolyline);
+
+        parsedSteps.add(
+          RouteStep(
+            instruction: cleanInstruction,
+            distance: stepDistance,
+            duration: stepDuration,
+            polyline: stepPolyline,
+          ),
+        );
+      }
+    }
+    
     return RouteModel(
       distance: leg["distance"]["value"].toDouble(), // meters
       duration: leg["duration"]["value"].toDouble(), // seconds
-      polyline: _decodePolyline(route["overview_polyline"]["points"]),
+      polyline: highResPoints,
+      steps: parsedSteps,
     );
   }
 
@@ -76,7 +109,7 @@ class RouteService {
       int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
       lng += dlng;
 
-      poly.add([lat / 1E5, lng / 1E5]);
+      poly.add([lat / 1e5, lng / 1e5]);
     }
 
     return poly;

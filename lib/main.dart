@@ -9,8 +9,13 @@ import 'package:rider_app/features/Navigation/navigation_repository.dart';
 import 'package:rider_app/core/services/location_service.dart';
 import 'package:rider_app/core/services/navigation_service.dart';
 import 'package:rider_app/core/services/route_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:rider_app/features/Map/Widgets/search_view_model.dart';
+import 'package:rider_app/core/services/places_service.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env.local");
   final locationService = LocationService();
   final routeService = RouteService();
   final navigationService = NavigationService(locationService);
@@ -27,8 +32,13 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: navigationController),
+
         ChangeNotifierProvider(
           create: (_) => MapViewModel(navigationController),
+        ),
+
+        ChangeNotifierProvider(
+          create: (_) => SearchViewModel(PlacesService()),
         ),
       ],
       child: const MyApp(),
