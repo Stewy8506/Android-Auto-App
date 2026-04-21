@@ -134,7 +134,7 @@ class _MapPageState extends State<MapPage> {
                   compassEnabled: false,
                   onTap: (_) {
                     FocusScope.of(context).unfocus();
-                    context.read<SearchViewModel>().clearSearch();
+                    context.read<SearchViewModel>().collapseSearch();
                   },
                   initialCameraPosition: CameraPosition(
                     target: LatLng(

@@ -61,6 +61,11 @@ class SearchViewModel extends ChangeNotifier {
     }
   }
 
+  void collapseSearch() {
+    results = [];
+    notifyListeners();
+  }
+
   void clearSearch() {
     textController.clear();
     results = [];
