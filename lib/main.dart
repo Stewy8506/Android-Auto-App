@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rider_app/features/Authentication/screens/dashboard.dart';
+import 'package:rider_app/features/dashboard.dart';
 
 void main() {
   runApp(const MyApp());

@@ -173,8 +173,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  width: 64,
-                                  height: 64,
+                                  width: 50,
+                                  height: 50,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: isDarkMode
@@ -196,7 +196,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   ),
                                   child: Center(
                                     child: Transform.translate(
-                                      offset: const Offset(2, 1),
+                                      offset: const Offset(2.5, 1.3),
                                       child: Text(
                                         rideScore.toString(),
                                         textAlign: TextAlign.center,
@@ -207,17 +207,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
-
-                                const SizedBox(height: 4),
-
-                                Text(
-                                  "Confidence",
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                    color: secondaryText,
-                                    fontSize: TSizes.fontXs,
                                   ),
                                 ),
                               ],
